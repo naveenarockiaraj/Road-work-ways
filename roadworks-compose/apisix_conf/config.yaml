@@ -1,0 +1,94 @@
+apisix:
+  # Node ID for this APISIX instance
+  node_listen: 9080
+  enable_ipv6: false
+
+  enable_admin: true
+  admin_listen:
+    ip: 0.0.0.0
+    port: 9180
+  admin_key:
+    - name: admin
+      key: ${APISIX_ADMIN_KEY}
+      role: admin
+
+  # Write to stdout so Docker captures logs
+  logs:
+    error_log: /dev/stderr
+    access_log: /dev/stdout
+
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+
+plugin_attr:
+  prometheus:
+    export_uri: /apisix/prometheus/metrics
+    metric_prefix: apisix_
+
+plugins:
+  - real-ip
+  - ai
+  - client-control
+  - proxy-control
+  - request-id
+  - zipkin
+  - ext-plugin-pre-req
+  - fault-injection
+  - mocking
+  - serverless-pre-function
+  - cors
+  - ip-restriction
+  - ua-restriction
+  - referer-restriction
+  - csrf
+  - uri-blocker
+  - request-validation
+  - openid-connect
+  - authz-casbin
+  - authz-casdoor
+  - wolf-rbac
+  - ldap-auth
+  - hmac-auth
+  - basic-auth
+  - jwt-auth
+  - key-auth
+  - consumer-restriction
+  - forward-auth
+  - opa
+  - authz-keycloak
+  - proxy-mirror
+  - proxy-cache
+  - proxy-rewrite
+  - api-breaker
+  - limit-conn
+  - limit-count
+  - limit-req
+  - gzip
+  - server-info
+  - traffic-split
+  - redirect
+  - response-rewrite
+  - body-transformer
+  - grpc-web
+  - grpc-transcode
+  - websocket
+  - tcp-logger
+  - kafka-logger
+  - rocketmq-logger
+  - sys-logger
+  - http-logger
+  - skywalking-logger
+  - google-cloud-logging
+  - sls-logger
+  - datadog
+  - elasticsearch-logger
+  - echo
+  - loggly
+  - syslog
+  - splunk-hec-logging
+  - file-logger
+  - clickhouse-logger
+  - tencent-cloud-cls
+  - inspect

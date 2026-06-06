@@ -1,24 +1,19 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Environment — never commit real secrets
+.env
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+.vscode/*
+!.vscode/extensions.json
+
+# Each sub-project has its own .gitignore for project-specific patterns
+# See roadworks-api/.gitignore and roadworks-web/.gitignore
