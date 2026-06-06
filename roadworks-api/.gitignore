@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Test / coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Poetry
+poetry.lock
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+*.manifest
+*.spec

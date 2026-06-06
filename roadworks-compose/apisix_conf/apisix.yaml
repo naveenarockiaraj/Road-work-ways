@@ -1,0 +1,60 @@
+# APISIX declarative routes configuration
+# Routes proxy:
+#   /api/*  → roadworks-api:8000
+#   /*      → roadworks-web:80
+
+routes:
+  # ── Backend API ──────────────────────────────────────────────────────────────
+  - id: api-route
+    uri: /api/*
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    upstream_id: api-upstream
+    plugins:
+      cors:
+        allow_origins: "*"
+        allow_methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+        allow_headers: "Authorization,Content-Type,Accept"
+        expose_headers: "X-Request-Id"
+        max_age: 3600
+      limit-req:
+        rate: 100
+        burst: 50
+        key_type: var
+        key: remote_addr
+        rejected_code: 429
+      request-id:
+        header_name: X-Request-Id
+        include_in_response: true
+
+  # ── Frontend SPA ─────────────────────────────────────────────────────────────
+  - id: web-route
+    uri: /*
+    methods:
+      - GET
+    upstream_id: web-upstream
+
+upstreams:
+  - id: api-upstream
+    nodes:
+      roadworks-api:8000: 1
+    type: roundrobin
+    scheme: http
+    pass_host: pass
+    keepalive_pool:
+      size: 16
+      idle_timeout: 60
+      requests: 1000
+
+  - id: web-upstream
+    nodes:
+      roadworks-web:80: 1
+    type: roundrobin
+    scheme: http
+
+#END

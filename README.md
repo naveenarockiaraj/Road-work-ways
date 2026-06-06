@@ -1,70 +1,75 @@
 # Road Work Ways
 
-A React web application built with Vite.
+A production-ready full-stack web application for Indian road construction contractors to manage employees, projects, materials, stock, expenses, attendance, and daily work logs.
 
 ## Tech Stack
 
-- **React** 18.3.1
-- **Vite** 5.4.10
-- **ESLint** 9 with react, react-hooks, and react-refresh plugins
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Vite, MUI, React Router, Axios, React Hook Form |
+| Backend | Node.js, Express.js, JWT, bcrypt |
+| Database | PostgreSQL |
 
-## Getting Started
+## Repository Structure
 
-### Prerequisites
-
-- Node.js (v18 or later recommended)
-- npm
-
-### Installation
-
-```bash
-npm install
+```
+Road-work-ways/
++-- roadworks-web/     # React frontend
++-- roadworks-api/     # Node.js + Express backend
++-- roadworks-db/      # PostgreSQL schema & seed scripts
++-- docs/              # Documentation
++-- deployment/        # Docker & deployment configs
++-- README.md
++-- .gitignore
 ```
 
-### Development
+## Quick Start
 
-Start the local dev server with Hot Module Replacement (HMR):
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 14+
+- npm or yarn
 
+### 1. Database Setup
 ```bash
+cd roadworks-db
+psql -U postgres -f schema.sql
+psql -U postgres -d roadworks_db -f seed.sql
+```
+
+### 2. Backend Setup
+```bash
+cd roadworks-api
+npm install
+cp .env.example .env
 npm run dev
 ```
 
-### Build
-
-Compile for production:
-
+### 3. Frontend Setup
 ```bash
-npm run build
+cd roadworks-web
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-### Preview
+## Modules
 
-Preview the production build locally:
+- **Authentication** � JWT login, role-based access
+- **Employees** � Profile, daily wage, Aadhaar, designation
+- **Attendance** � Daily entry per project, working hours
+- **Projects** � Road construction project lifecycle
+- **Materials** � Stock tracking, inward/outward transactions
+- **Expenses** � Category-wise expense entry and reporting
+- **Vendors** � Supplier management with GST details
+- **Reports** � Daily, monthly, attendance, stock, expense reports
+- **Dashboard** � KPI cards, stock alerts, activity feed
 
-```bash
-npm run preview
-```
+## Default Login (after seed)
 
-### Lint
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@roadworks.in | Admin@123 |
 
-Run ESLint across the codebase:
-
-```bash
-npm run lint
-```
-
-## Project Structure
-
-```
-├── public/          # Static assets
-├── src/
-│   ├── assets/      # Images and other asset files
-│   ├── App.css      # App-level styles
-│   ├── App.jsx      # Root application component
-│   ├── index.css    # Global styles
-│   └── main.jsx     # Application entry point
-├── eslint.config.js
-├── index.html
-├── package.json
-└── vite.config.js
-```
+## License
+MIT
