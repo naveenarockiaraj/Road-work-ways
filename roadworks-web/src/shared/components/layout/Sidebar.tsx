@@ -27,6 +27,7 @@ interface SidebarProps {
   open: boolean;
   onClose: () => void;
   width: number;
+  variant: "persistent" | "temporary";
 }
 
 const navItems = [
@@ -41,7 +42,7 @@ const navItems = [
   { label: "Reports", icon: <AssessmentIcon />, path: ROUTES.REPORT_DAILY },
 ];
 
-export function Sidebar({ open, onClose, width }: SidebarProps) {
+export function Sidebar({ open, onClose, width, variant }: SidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -52,11 +53,12 @@ export function Sidebar({ open, onClose, width }: SidebarProps) {
 
   return (
     <Drawer
-      variant="persistent"
+      variant={variant}
       anchor="left"
       open={open}
+      onClose={onClose}
       sx={{
-        width,
+        width: variant === "persistent" && open ? width : 0,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width,
@@ -92,7 +94,10 @@ export function Sidebar({ open, onClose, width }: SidebarProps) {
           return (
             <ListItem key={item.path} disablePadding sx={{ px: 1, mb: 0.25 }}>
               <ListItemButton
-                onClick={() => navigate(item.path)}
+                onClick={() => {
+                  navigate(item.path);
+                  onClose();
+                }}
                 selected={active}
                 sx={{
                   borderRadius: 2,
