@@ -31,11 +31,9 @@ Road-work-ways/
 - npm or yarn
 
 ### 1. Database Setup
-```bash
-cd roadworks-db
-psql -U postgres -f schema.sql
-psql -U postgres -d roadworks_db -f seed.sql
-```
+See [docs/DATABASE_OPERATIONS.md](docs/DATABASE_OPERATIONS.md). In short: `roadworks-db/init.sql`
+(extensions), then `alembic upgrade head` in `roadworks-api/`, then
+`python -m app.cli.create_admin`. `seed.sql` is optional demo data, loaded after migrations.
 
 ### 2. Backend Setup
 ```bash
@@ -65,11 +63,10 @@ npm run dev
 - **Reports** — Daily, monthly, attendance, stock, expense reports
 - **Dashboard** — KPI cards, stock alerts, activity feed
 
-## Default Login (after seed)
+## First Login
 
-| Role | Email | Password |
-|------|-------|----------|
-| Super Admin | admin@roadworks.in | Admin@123 |
+There is no default administrator. Create one explicitly with
+`python -m app.cli.create_admin` (see [docs/DATABASE_OPERATIONS.md](docs/DATABASE_OPERATIONS.md)).
 
 ## License
 MIT

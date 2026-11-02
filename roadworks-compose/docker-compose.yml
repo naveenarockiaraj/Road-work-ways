@@ -31,7 +31,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ../roadworks-db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
-      - ../roadworks-db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      # seed.sql is NOT mounted here: init scripts run before migrations create the
+      # tables. Load demo data manually after `alembic upgrade head` if needed.
     ports:
       - "5432:5432"
     healthcheck:
