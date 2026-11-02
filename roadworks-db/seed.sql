@@ -1,13 +1,17 @@
 -- Road Work Ways — Seed Data
--- Run AFTER: alembic upgrade head
--- Provides demo data for local development.
+-- Run AFTER: alembic upgrade head (never from docker-entrypoint-initdb.d).
+-- Provides demo data for local development only.
+--
+-- This file does NOT create an administrator. Create the first SUPER_ADMIN
+-- explicitly with: python -m app.cli.create_admin
 
 \c roadworks_db
 
 -- ── Users (password = Admin@123, bcrypt hash) ──────────────────────────────
+-- Demo non-admin accounts only; they share a publicly known demo password.
+-- Never load this file into a production database.
 INSERT INTO users (username, email, full_name, password_hash, role, is_active, created_at, updated_at)
 VALUES
-  ('admin',    'admin@roadworkways.com',    'Administrator',   '$2b$12$N0Mk2O2KVl0cV5zDTKmwwOz.dhxJH1wwNmpF.BO6ICpaxDAaSZ/E6', 'SUPER_ADMIN',     true, NOW(), NOW()),
   ('manager',  'manager@roadworkways.com',  'Project Manager', '$2b$12$N0Mk2O2KVl0cV5zDTKmwwOz.dhxJH1wwNmpF.BO6ICpaxDAaSZ/E6', 'PROJECT_MANAGER', true, NOW(), NOW()),
   ('engineer', 'engineer@roadworkways.com', 'Site Engineer',   '$2b$12$N0Mk2O2KVl0cV5zDTKmwwOz.dhxJH1wwNmpF.BO6ICpaxDAaSZ/E6', 'SITE_ENGINEER',   true, NOW(), NOW())
 ON CONFLICT (username) DO NOTHING;

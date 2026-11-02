@@ -18,12 +18,6 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:3000"]
 
-    # First superuser
-    FIRST_SUPERUSER_USERNAME: str = "admin"
-    FIRST_SUPERUSER_EMAIL: str = "admin@roadworkways.in"
-    FIRST_SUPERUSER_PASSWORD: str = "Admin@123456"
-    FIRST_SUPERUSER_FULLNAME: str = "System Administrator"
-
     model_config = {"env_file": ".env", "case_sensitive": True, "extra": "ignore"}
 
 

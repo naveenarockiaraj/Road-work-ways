@@ -57,9 +57,6 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=480
 PROJECT_NAME=Road Work Ways
 BACKEND_CORS_ORIGINS=["http://localhost:5173","http://localhost:3000"]
-FIRST_SUPERUSER_USERNAME=admin
-FIRST_SUPERUSER_EMAIL=admin@roadworkways.in
-FIRST_SUPERUSER_PASSWORD=Admin@123456
 ```
 
 ---
@@ -71,7 +68,19 @@ FIRST_SUPERUSER_PASSWORD=Admin@123456
 alembic upgrade head
 ```
 
-This creates all tables and seeds the default admin user.
+This creates all tables (baseline revision `d2fa37494fac`). It never creates users, and the
+API never changes the schema on startup.
+
+### Create the first administrator (one time, explicit)
+
+```bash
+python -m app.cli.create_admin --username admin --email admin@example.com --full-name "System Administrator"
+```
+
+You will be prompted for the password (or pipe it with `--password-stdin`). There is no
+default administrator or default password. See
+[docs/DATABASE_OPERATIONS.md](../docs/DATABASE_OPERATIONS.md) for exit codes, recovery,
+deployment order and adopting an existing database.
 
 ---
 
@@ -100,11 +109,11 @@ FastAPI auto-generates interactive API docs. Open in your browser:
 1. Open **http://localhost:8000/api/docs**
 2. Click **POST /api/v1/auth/login**
 3. Click **Try it out**
-4. Enter credentials:
+4. Enter the credentials of the administrator you created with `create_admin`:
    ```json
    {
      "username": "admin",
-     "password": "Admin@123456"
+     "password": "<your admin password>"
    }
    ```
 5. Click **Execute** — copy the `access_token` from the response
@@ -135,15 +144,19 @@ FastAPI auto-generates interactive API docs. Open in your browser:
 ## Common commands
 
 ```bash
-# Create a new migration after editing a model
+# Create a new migration after editing a model (against a disposable DB at head)
 alembic revision --autogenerate -m "describe change"
 alembic upgrade head
 
-# Roll back last migration
+# Roll back last migration (DISPOSABLE databases only - destroys data)
 alembic downgrade -1
 
 # Check current migration version
 alembic current
+
+# Run tests (DB tests need RWW_TEST_DATABASE_URL; see docs/DATABASE_OPERATIONS.md)
+pip install -r requirements-dev.txt
+python -m pytest
 ```
 
 ---

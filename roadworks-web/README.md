@@ -126,4 +126,4 @@ src/
 | `npm run dev` fails with engine error | Upgrade Node to 18+                                                 |
 | White screen / 401 errors             | Check backend is running on port 8000                               |
 | CORS errors in browser                | Add `http://localhost:5173` to `BACKEND_CORS_ORIGINS` in API `.env` |
-| Login fails                           | Run `alembic upgrade head` on the backend to create the admin user  |
+| Login fails                           | Run `alembic upgrade head`, then create the admin with `python -m app.cli.create_admin` |

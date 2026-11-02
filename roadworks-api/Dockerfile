@@ -36,5 +36,7 @@ USER appuser
 
 EXPOSE 8000
 
-# Run database migrations then start the server
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+# Start the server only. Schema migrations are an explicit deployment step and must be
+# run separately (see docs/DATABASE_OPERATIONS.md), e.g.:
+#   docker compose run --rm roadworks-api alembic upgrade head
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

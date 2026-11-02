@@ -5,16 +5,14 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.exceptions import setup_exception_handlers
 from app.api.router import api_router
-from app.db.session import engine
-from app.db.base import Base
+from app.db import base as _model_registry  # noqa: F401 - registers every model so string-based relationships resolve
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: create tables if not using alembic
-    Base.metadata.create_all(bind=engine)
+    # Startup never creates or alters the schema; run `alembic upgrade head` as an
+    # explicit deployment step before starting the API.
     yield
-    # Shutdown: cleanup
 
 
 app = FastAPI(
